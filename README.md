@@ -1,6 +1,8 @@
-# Airbnb Clone Project
+# Airbnb Clone Backend
 
-A full-stack booking platform simulating Airbnb's core functionality, focused on scalable backend architecture, secure APIs, and modern development workflows.
+## About
+
+Full-stack booking platform simulating Airbnb's core functionality. Focus on scalable backend architecture, secure APIs, and modern development workflows.
 
 ---
 
@@ -17,37 +19,137 @@ A full-stack booking platform simulating Airbnb's core functionality, focused on
 ## Tech Stack
 
 - **Django** – Backend framework  
-- **MySQL** – Relational database  
+- **MySQL** – Database  
 - **GraphQL** – API layer  
-- **GitHub Actions** – CI/CD automation  
-- **JWT (JSON Web Tokens)** – Authentication  
-- **Docker** – Containerization and environment consistency  
+- **GitHub Actions** – CI/CD  
+- **JWT** – Authentication  
+- **Docker** – Containerization  
 
 ---
 
 ## Core Features
 
 - User authentication and authorization  
-- Property listings and search functionality  
+- Property listings and search  
 - Booking management system  
 - Payment processing integration  
 - Review and rating system  
-- Real-time messaging between users  
+- Real-time messaging  
 
 ---
 
-##  Project Structure
+## Team Roles
+
+- **Backend Developer**: Designs and implements server-side logic, APIs, and database interactions using Django.  
+- **Database Administrator**: Manages database design, optimization, and security; ensures data integrity across all entities.  
+- **DevOps Engineer**: Sets up CI/CD pipelines, manages infrastructure, and ensures smooth integration between development and operations.  
+- **QA Engineer**: Develops testing strategies, performs manual and automated testing to ensure application quality and reliability.  
 
 ---
 
-## Getting Started
+## Technology Stack
 
-```bash
-# Clone the repo
-git clone https://github.com/your-username/airbnb-clone-project.git
+| Component         | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| **Django**        | Web framework for building RESTful APIs and handling server-side logic     |
+| **PostgreSQL**    | Relational DB for user data, properties, bookings, and transactions        |
+| **GraphQL**       | API layer for flexible data querying and efficient client-server interaction |
+| **GitHub Actions**| CI/CD for automated testing, building, and deployment                      |
+| **Docker**        | Containerization for consistent dev and prod environments                  |
+| **JWT**           | Token-based authentication for secure sessions                             |
 
-# Navigate into the project
-cd airbnb-clone-project
+---
 
-# Build and run with Docker
-docker-compose up --build
+## Database Design
+
+### Core Entities
+
+#### BaseModel
+- `id` (Primary Key)  
+- `created_at` (Timestamp)  
+- `updated_at` (Timestamp)  
+
+#### Users
+- Fields: `name`, `email`, `password`, `phone`, `is_host`  
+- Relationships: One-to-many with Properties and Bookings  
+
+#### Properties
+- Fields: `name`, `address`, `price_per_night`, `owner_id`, `amenities`  
+- Relationships: Belongs to User (owner), has many Reviews and Bookings  
+
+#### Bookings
+- Fields: `user_id`, `property_id`, `start_date`, `end_date`, `total_price`  
+- Relationships: Belongs to User and Property, one-to-one with Payment  
+
+#### Reviews
+- Fields: `user_id`, `property_id`, `rating`, `comment`  
+- Relationships: Belongs to User and Property  
+
+#### Payments
+- Fields: `user_id`, `booking_id`, `amount`, `status`, `payment_method`  
+- Relationships: Belongs to User and Booking  
+
+> All entities inherit common attributes from BaseModel for consistent data tracking.
+
+---
+
+## Feature Breakdown
+
+### User Management
+- Registration, login, profile management  
+- Role-based access control (guests vs hosts)  
+
+### Property Management
+- Hosts can list, update, and manage properties  
+- Support for photos, amenities, pricing, availability calendars  
+
+### Booking System
+- Reservation flow with availability checks and cancellation handling  
+- Business logic validation  
+
+### Review System
+- Guests review properties  
+- Hosts review guests  
+- Reputation management for platform trust  
+
+### Payment Processing
+- Secure payments and refunds  
+- Payouts to hosts  
+- Financial tracking and audit  
+
+---
+
+## API Security
+
+- **JWT Authentication**: Secure user sessions and route protection  
+- **Role-Based Authorization**: Access control based on user roles  
+- **Input Validation**: Prevent SQL injection and bad data  
+- **Data Encryption**: Passwords, payments, and sensitive user info  
+- **Rate Limiting**: Prevent DDoS and abuse  
+- **PCI DSS Compliance**: Secure financial transactions  
+
+---
+
+## CI/CD Pipeline
+
+### Goals
+Automate the software delivery process, ensure code quality, and enable reliable deployments.
+
+### Tools & Workflow
+
+- **GitHub Actions**:  
+  - Run tests  
+  - Code quality checks  
+  - Trigger deployments on push  
+- **Docker**:  
+  - Containerized app setup for dev, staging, and production  
+- **Automated Testing**:  
+  - Unit tests  
+  - Integration tests  
+  - Security scans  
+
+**Benefits**:  
+- Faster development cycles  
+- Fewer manual errors  
+- Consistent, reliable deployments  
+
